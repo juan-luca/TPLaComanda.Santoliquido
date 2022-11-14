@@ -10,11 +10,14 @@ class UsuarioController extends Usuario implements IApiUsable
 
         $usuario = $parametros['usuario'];
         $clave = $parametros['clave'];
+        $idPerfil = $parametros['idPerfil'];
 
         // Creamos el usuario
         $usr = new Usuario();
         $usr->usuario = $usuario;
         $usr->clave = $clave;
+        $usr->idPerfil = $idPerfil;
+
         $usr->crearUsuario();
 
         $payload = json_encode(array("mensaje" => "Usuario creado con exito"));
@@ -87,6 +90,7 @@ class UsuarioController extends Usuario implements IApiUsable
 
     public function TraerTodos($request, $response, $args)
     {
+     
         $lista = Usuario::obtenerTodos();
         $payload = json_encode(array("listaUsuario" => $lista));
 
@@ -101,14 +105,15 @@ class UsuarioController extends Usuario implements IApiUsable
         $parametros = $request->getParsedBody();
         
         
-        $id = $args['usuarioId'];
+        $id = $args['id'];
         
-        
-        $nombre = $parametros['nombre'];
+        var_dump($parametros);
+        $usuario = $parametros['usuario'];
         $clave = $parametros['clave'];
+        $idPerfil = $parametros['idPerfil'];
         
         
-        if(Usuario::modificarUsuario($id,$nombre,$clave))
+        if(Usuario::modificarUsuario($id,$usuario,$clave,$idPerfil))
         {
           $payload = json_encode(array("mensaje" => "Usuario modificado con exito"));
         }else
@@ -126,8 +131,8 @@ class UsuarioController extends Usuario implements IApiUsable
     {
         
 
-        $usuarioId = $args['usuarioId'];
-        Usuario::borrarUsuario($usuarioId);
+        $id = $args['id'];
+        Usuario::borrarUsuario($id);
 
         $payload = json_encode(array("mensaje" => "Usuario borrado con exito"));
 
