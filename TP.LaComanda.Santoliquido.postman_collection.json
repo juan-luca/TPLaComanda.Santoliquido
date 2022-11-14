@@ -1,0 +1,417 @@
+{
+	"info": {
+		"_postman_id": "f3386e7b-7116-4d21-a81f-f9c14e528bd8",
+		"name": "TP.LaComanda.Santoliquido",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13303665"
+	},
+	"item": [
+		{
+			"name": "Alta USUARIO 1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "usuario",
+							"value": "roberto",
+							"type": "text"
+						},
+						{
+							"key": "clave",
+							"value": "12334455",
+							"type": "text"
+						},
+						{
+							"key": "idPerfil",
+							"value": "3",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:666/usuarios/",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"usuarios",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Alta USUARIO 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "usuario",
+							"value": "tomas",
+							"type": "text"
+						},
+						{
+							"key": "idPerfil",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "clave",
+							"value": "12334455",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:666/usuarios/",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"usuarios",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Alta USUARIO 3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "usuario",
+							"value": "lucas",
+							"type": "text"
+						},
+						{
+							"key": "idPerfil",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "clave",
+							"value": "12334455",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:666/usuarios/",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"usuarios",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar USUARIO",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "usuario",
+							"value": "usuarioMOD",
+							"type": "text"
+						},
+						{
+							"key": "clave",
+							"value": "123",
+							"type": "text"
+						},
+						{
+							"key": "idPerfil",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:666/usuarios/5",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"usuarios",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar USUARIO",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "localhost:666/usuarios/4",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"usuarios",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar USUARIOS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:666/usuarios/",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"usuarios",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Alta PRODUCTO 1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "fideos",
+							"type": "text"
+						},
+						{
+							"key": "precio",
+							"value": "1500",
+							"type": "text"
+						},
+						{
+							"key": "idTipo",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:666/productos/",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"productos",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Alta PRODUCTO 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "ensalada fried",
+							"type": "text"
+						},
+						{
+							"key": "precio",
+							"value": "3750",
+							"type": "text"
+						},
+						{
+							"key": "idTipo",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:666/productos/",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"productos",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Alta PRODUCTO 3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "Suprema simple",
+							"type": "text"
+						},
+						{
+							"key": "precio",
+							"value": "2500",
+							"type": "text"
+						},
+						{
+							"key": "idTipo",
+							"value": "3",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:666/productos/",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"productos",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar PRODUCTOS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:666/productos/",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"productos",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar PRODUCTOS",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "usuario",
+							"value": "juan",
+							"type": "text"
+						},
+						{
+							"key": "clave",
+							"value": "asdas15615",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:666/productos/1",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"productos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar PRODUCTOS",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nombre",
+							"value": "productoMOD",
+							"type": "text"
+						},
+						{
+							"key": "precio",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "idTipo",
+							"value": "0",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:666/productos/2",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"productos",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
