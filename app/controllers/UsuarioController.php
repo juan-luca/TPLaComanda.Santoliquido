@@ -38,10 +38,12 @@ class UsuarioController extends Usuario implements IApiUsable
         if ($parametros != null) {
           if (count($parametros) == 2) {
 
-              
+            
               
               if(password_verify($clave,$usuario->clave))
               {
+                $parametros['idPerfil']=$usuario->idPerfil;
+               
                 $token=AutentificadorJWT::CrearToken($parametros);
                 $retorno=$token;
               }else

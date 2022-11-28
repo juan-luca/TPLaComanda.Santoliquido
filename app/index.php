@@ -18,9 +18,12 @@ require_once './db/AccesoDatos.php';
 require_once './controllers/UsuarioController.php';
 require_once './controllers/ProductoController.php';
 require_once './controllers/PedidoController.php';
+require_once './controllers/ComandaController.php';
 require_once './controllers/MesaController.php';
 require_once './middlewares/Logger.php';
 require_once './middlewares/AutentificadorJWT.php';
+require_once './middlewares/AdminVerificador.php';
+require_once './middlewares/UsuarioVerificador.php';
 
 // Load ENV
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -39,10 +42,12 @@ $app->addBodyParsingMiddleware();
 $app->group('/usuarios', function (RouteCollectorProxy $group) {
     $group->get('[/]', \UsuarioController::class . ':TraerTodos');
     $group->get('/{usuario}', \UsuarioController::class . ':TraerUno');
-    $group->post('[/]', \UsuarioController::class . ':CargarUno');
-    $group->delete('/{id}', \UsuarioController::class . ':BorrarUno');
-    $group->put('/{id}', \UsuarioController::class . ':ModificarUno');
-  });
+    $group->post('[/]', \UsuarioController::class . ':CargarUno')->add(new AdminVerificador);
+    $group->delete('/{id}', \UsuarioController::class . ':BorrarUno')->add(new AdminVerificador);
+    $group->put('/{id}', \UsuarioController::class . ':ModificarUno')->add(new AdminVerificador);
+  })->add(new UsuarioVerificador);
+
+
 
   // ruta productos
 $app->group('/productos', function (RouteCollectorProxy $group) {
@@ -51,7 +56,7 @@ $app->group('/productos', function (RouteCollectorProxy $group) {
     $group->post('[/]', \ProductoController::class . ':CargarUno');
     $group->delete('/{id}', \ProductoController::class . ':BorrarUno');
     $group->put('/{id}', \ProductoController::class . ':ModificarUno');
-  });
+  })->add(new UsuarioVerificador);
 
    // ruta Mesas
 $app->group('/mesas', function (RouteCollectorProxy $group) {
@@ -60,7 +65,7 @@ $app->group('/mesas', function (RouteCollectorProxy $group) {
   $group->post('[/]', \MesaController::class . ':CargarUno');
   $group->delete('/{id}', \MesaController::class . ':BorrarUno');
   $group->put('/{id}', \MesaController::class . ':ModificarUno');
-});
+})->add(new UsuarioVerificador);
 
    // ruta Pedido
    $app->group('/pedidos', function (RouteCollectorProxy $group) {
@@ -69,13 +74,22 @@ $app->group('/mesas', function (RouteCollectorProxy $group) {
     $group->post('[/]', \PedidoController::class . ':CargarUno');
     $group->delete('/{id}', \PedidoController::class . ':BorrarUno');
     $group->put('/{id}', \PedidoController::class . ':ModificarUno');
-  });
+  })->add(new UsuarioVerificador);
+
+   // ruta Comanda
+   $app->group('/comandas', function (RouteCollectorProxy $group) {
+    $group->get('[/]', \ComandaController::class . ':TraerTodos');
+    $group->get('/{id}', \ComandaController::class . ':TraerUno');
+    $group->post('[/]', \ComandaController::class . ':CargarUno');
+    $group->delete('/{id}', \ComandaController::class . ':BorrarUno');
+    $group->put('/{id}', \ComandaController::class . ':ModificarUno');
+  })->add(new UsuarioVerificador);
 
 //login
-  $app->group('/login', function (RouteCollectorProxy $group) {
-    $group->post('[/]', \UsuarioController::class . ':Login');
-    
-  });
+$app->group('/login', function (RouteCollectorProxy $group) {
+  $group->post('[/]', \UsuarioController::class . ':Login')->add(new LoggerMiddleware());
+  
+});
 
  
 

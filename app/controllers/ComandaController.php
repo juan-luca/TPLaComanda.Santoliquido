@@ -1,27 +1,28 @@
 <?php
-require_once './models/Pedido.php';
+require_once './models/Comanda.php';
 require_once './interfaces/IApiUsable.php';
 
-class PedidoController extends Pedido implements IApiUsable
+class ComandaController extends Comanda implements IApiUsable
 {
     public function CargarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
 
       
-        $idMesa = $parametros['idMesa'];
-        
-        $idMozo = $parametros['idMozo'];
+        $idPedido = $parametros['idPedido'];
+        $idProducto = $parametros['idProducto'];
+        $cantidad = $parametros['cantidad'];
 
-        // Creamos el Pedido
-        $ped = new Pedido();
-        $ped->idMesa = $idMesa;
-        $ped->idMozo = $idMozo;
-        $ped->fotoMesa = $ped->guardarFoto();
+        // Creamos el Comanda
+        $ped = new Comanda();
+        $ped->idPedido = $idPedido;
+        $ped->idProducto = $idProducto;
+        $ped->cantidad = $cantidad;
+       
 
-        $ped->crearPedido();
+        $ped->crearComanda();
 
-        $payload = json_encode(array("mensaje" => "Pedido creado con exito"));
+        $payload = json_encode(array("mensaje" => "Comanda creado con exito"));
 
         $response->getBody()->write($payload);
         return $response
@@ -30,10 +31,10 @@ class PedidoController extends Pedido implements IApiUsable
 
     public function TraerUno($request, $response, $args)
     {
-        // Buscamos Pedido por id
+        // Buscamos Comanda por id
         $id = $args['id'];
-        $pedido = Pedido::obtenerPedido($id);
-        $payload = json_encode($pedido);
+        $Comanda = Comanda::obtenerComanda($id);
+        $payload = json_encode($Comanda);
 
         $response->getBody()->write($payload);
         return $response
@@ -42,8 +43,8 @@ class PedidoController extends Pedido implements IApiUsable
 
     public function TraerTodos($request, $response, $args)
     {
-        $lista = Pedido::obtenerTodos();
-        $payload = json_encode(array("listaPedido" => $lista));
+        $lista = Comanda::obtenerTodos();
+        $payload = json_encode(array("listaComanda" => $lista));
 
         $response->getBody()->write($payload);
         return $response
@@ -63,12 +64,12 @@ class PedidoController extends Pedido implements IApiUsable
         $idEstado = $parametros['idEstado'];
         
         
-        if(Pedido::modificarPedido($id, $idMesa, $idMozo, $idEstado))
+        if(Comanda::modificarComanda($id, $idMesa, $idMozo, $idEstado))
         {
-          $payload = json_encode(array("mensaje" => "Pedido modificado con exito"));
+          $payload = json_encode(array("mensaje" => "Comanda modificado con exito"));
         }else
         {
-          $payload = json_encode(array("mensaje" => "Pedido NO SE PUDO MODIFICAR"));
+          $payload = json_encode(array("mensaje" => "Comanda NO SE PUDO MODIFICAR"));
         }
         
 
@@ -82,9 +83,9 @@ class PedidoController extends Pedido implements IApiUsable
         
 
         $id = $args['id'];
-        Pedido::borrarPedido($id);
+        Comanda::borrarComanda($id);
 
-        $payload = json_encode(array("mensaje" => "Pedido borrado con exito"));
+        $payload = json_encode(array("mensaje" => "Comanda borrado con exito"));
 
         $response->getBody()->write($payload);
         return $response
