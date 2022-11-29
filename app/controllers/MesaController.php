@@ -10,17 +10,57 @@ class MesaController extends Mesa implements IApiUsable
 
         $descripcion = $parametros['descripcion'];
         $idSalon = $parametros['idSalon'];
-        $idEstado = $parametros['idEstado'];
 
         // Creamos el Mesa
         $mesa = new Mesa();
         $mesa->descripcion = $descripcion;
-        $mesa->idSalon = $idSalon;
-        $mesa->idEstado = $idEstado;
+        $mesa->salon = $idSalon;
 
         $mesa->crearMesa();
 
         $payload = json_encode(array("mensaje" => "Mesa creado con exito"));
+
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
+    }
+    public function servirMesa($request, $response, $args)
+    {
+      
+        
+        
+        
+        
+        $id = $args['id'];
+        
+        
+        
+        
+        if(Mesa::actualizarEstadoMesa(2,$id))
+        {
+          $payload = json_encode(array("mensaje" => "Mesa modificado con exito"));
+        }else
+        {
+          $payload = json_encode(array("mensaje" => "Mesa NO SE PUDO MODIFICAR"));
+        }
+        
+
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
+    }
+    public function cerrarMesa($request, $response, $args)
+    {
+        $id = $args['id'];
+        $payload = json_encode(array("mensaje" => "ERROR ALC ERRAR LA MESA"));
+        if(Mesa::actualizarEstadoMesa(3,$id))
+        {
+          if(Pedido::cerrarPedido($id))
+          {
+            $payload = json_encode(array("mensaje" => "Se cerraron con exito el pedido y la mesa."));
+          }
+        }
+        
 
         $response->getBody()->write($payload);
         return $response
@@ -41,6 +81,7 @@ class MesaController extends Mesa implements IApiUsable
     public function TraerTodos($request, $response, $args)
     {
         $lista = Mesa::obtenerTodos();
+        
         $payload = json_encode(array("listaMesa" => $lista));
 
         $response->getBody()->write($payload);

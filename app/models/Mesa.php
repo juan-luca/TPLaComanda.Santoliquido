@@ -12,10 +12,9 @@ class Mesa
     public function crearMesa()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO mesas (descripcion, salon, idTipo) VALUES (:descripcion, :salon, :idTipo)");
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO mesas (descripcion, idSalon, idEstado) VALUES (:descripcion, :salon, 1)");
         $consulta->bindValue(':descripcion', $this->descripcion, PDO::PARAM_STR);
         $consulta->bindValue(':salon', $this->salon);
-        $consulta->bindValue(':idEstado', $this->idEstado, PDO::PARAM_INT);
 
         $consulta->execute();
 
@@ -25,10 +24,10 @@ class Mesa
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, descripcion, salon, idEstado FROM mesas");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT M.id, M.descripcion, M.idSalon, E.descripcion FROM mesas M,estadosmesa E where M.idEstado=E.id");
         $consulta->execute();
 
-        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Mesa');
+        return $consulta->fetchAll(PDO::FETCH_CLASS);
     }
 
     public static function obtenerMesa($id)
@@ -49,6 +48,19 @@ class Mesa
         $consulta->bindValue(':salon', $salon, PDO::PARAM_INT);
         $consulta->bindValue(':id', $id, PDO::PARAM_INT);
         $consulta->bindValue(':idEstado', $idEstado, PDO::PARAM_INT);
+
+        return $consulta->execute();
+    }
+    public static function actualizarEstadoMesa($estado,$id)
+    {
+        
+        $objAccesoDato = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE mesas SET idEstado = :estado  WHERE id = :id");
+
+        
+        $consulta->bindValue(':estado', $estado, PDO::PARAM_INT);
+
+        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
 
         return $consulta->execute();
     }

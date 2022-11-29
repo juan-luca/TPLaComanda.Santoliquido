@@ -12,17 +12,19 @@ class ComandaController extends Comanda implements IApiUsable
         $idPedido = $parametros['idPedido'];
         $idProducto = $parametros['idProducto'];
         $cantidad = $parametros['cantidad'];
+        $codigoPedido = $parametros['codigoPedido'];
 
         // Creamos el Comanda
         $ped = new Comanda();
         $ped->idPedido = $idPedido;
         $ped->idProducto = $idProducto;
         $ped->cantidad = $cantidad;
-       
+        $ped->codigoPedido = $codigoPedido;
 
         $ped->crearComanda();
-
-        $payload = json_encode(array("mensaje" => "Comanda creado con exito"));
+        
+        $tiempoEstimado= Pedido::tiempoPedido($codigoPedido);
+        $payload = json_encode(array("mensaje" => "Comanda creado con exito. El tiempo estimado de entrega es de: ".$tiempoEstimado));
 
         $response->getBody()->write($payload);
         return $response

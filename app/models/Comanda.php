@@ -7,18 +7,20 @@ class Comanda
     public $idPedido;
     public $idProducto;
     public $cantidad;
+    public $codigoPedido;
 
    
 
     public function crearComanda()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO comandas (fechaAlta,idPedido,idProducto,cantidad) VALUES (:fechaAlta,:idPedido,:idProducto,:cantidad)");
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO comandas (fechaAlta,idPedido,idProducto,cantidad,codigoPedido) VALUES (:fechaAlta,:idPedido,:idProducto,:cantidad,:codigoPedido)");
         $fecha = new DateTime(date("d-m-Y"));
         $consulta->bindValue(':fechaAlta', date_format($fecha, 'Y-m-d H:i:s'));
         $consulta->bindValue(':idPedido', $this->idPedido, PDO::PARAM_INT);
         $consulta->bindValue(':idProducto', $this->idProducto, PDO::PARAM_INT);
         $consulta->bindValue(':cantidad', $this->cantidad, PDO::PARAM_INT);
+        $consulta->bindValue(':codigoPedido', $this->codigoPedido, PDO::PARAM_STR);
 
         $consulta->execute();
 
@@ -45,15 +47,11 @@ class Comanda
         return $consulta->fetchObject('Comanda');
     }
 
-    public static function modificarComanda($id,$idPedido,$idProducto,$cantidad,$idCliente)
+    public static function modificarComanda($id, $idMesa, $idMozo, $idEstado)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDato->prepararConsulta("UPDATE comandas SET idPedido = :idPedido, idProducto = :idProducto, cantidad = :cantidad, idCliente = :idCliente,  WHERE id = :id");
        
-        $consulta->bindValue(':idPedido', $idPedido, PDO::PARAM_INT);
-        $consulta->bindValue(':idProducto', $idProducto, PDO::PARAM_INT);
-        $consulta->bindValue(':cantidad', $cantidad, PDO::PARAM_INT);
-        $consulta->bindValue(':idCliente', $idCliente, PDO::PARAM_INT);
 
         $consulta->bindValue(':id', $id, PDO::PARAM_INT);
 

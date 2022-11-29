@@ -60,8 +60,10 @@ $app->group('/productos', function (RouteCollectorProxy $group) {
 
    // ruta Mesas
 $app->group('/mesas', function (RouteCollectorProxy $group) {
-  $group->get('[/]', \MesaController::class . ':TraerTodos');
+  $group->get('[/]', \MesaController::class . ':TraerTodos')->add(new AdminVerificador);
   $group->get('/{id}', \MesaController::class . ':TraerUno');
+  $group->get('/servirMesa/{id}', \MesaController::class . ':servirMesa');
+  $group->get('/cerrarMesa/{id}', \MesaController::class . ':cerrarMesa')->add(new AdminVerificador);
   $group->post('[/]', \MesaController::class . ':CargarUno');
   $group->delete('/{id}', \MesaController::class . ':BorrarUno');
   $group->put('/{id}', \MesaController::class . ':ModificarUno');
@@ -69,11 +71,15 @@ $app->group('/mesas', function (RouteCollectorProxy $group) {
 
    // ruta Pedido
    $app->group('/pedidos', function (RouteCollectorProxy $group) {
-    $group->get('[/]', \PedidoController::class . ':TraerTodos');
-    $group->get('/{id}', \PedidoController::class . ':TraerUno');
+     $group->get('/{id}', \PedidoController::class . ':TraerUno');
+     $group->get('/cobrar/{codigo}', \PedidoController::class . ':cobrarPedido');
+     $group->get('[/]', \PedidoController::class . ':TraerTodos')->add(new AdminVerificador);
+    $group->get('/empleado/{id}', \PedidoController::class . ':TraerTodosPorEmpleado');
     $group->post('[/]', \PedidoController::class . ':CargarUno');
     $group->delete('/{id}', \PedidoController::class . ':BorrarUno');
     $group->put('/{id}', \PedidoController::class . ':ModificarUno');
+    $group->put('/actualizar/', \PedidoController::class . ':actualizarEstado');
+    $group->get('/listos/', \PedidoController::class . ':TraerListos');
   })->add(new UsuarioVerificador);
 
    // ruta Comanda
@@ -84,6 +90,11 @@ $app->group('/mesas', function (RouteCollectorProxy $group) {
     $group->delete('/{id}', \ComandaController::class . ':BorrarUno');
     $group->put('/{id}', \ComandaController::class . ':ModificarUno');
   })->add(new UsuarioVerificador);
+    // ruta Pedido
+    $app->group('/clientes', function (RouteCollectorProxy $group) {
+      $group->get('/tiempoEstimado/{codigo}', \PedidoController::class . ':tiempoEstimado');
+      
+    });
 
 //login
 $app->group('/login', function (RouteCollectorProxy $group) {
