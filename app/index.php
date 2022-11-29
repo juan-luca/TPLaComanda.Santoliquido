@@ -45,6 +45,7 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
     $group->post('[/]', \UsuarioController::class . ':CargarUno')->add(new AdminVerificador);
     $group->delete('/{id}', \UsuarioController::class . ':BorrarUno')->add(new AdminVerificador);
     $group->put('/{id}', \UsuarioController::class . ':ModificarUno')->add(new AdminVerificador);
+    $group->get('/exportar/', \UsuarioController::class . ':exportarUsuariosCSV')->add(new AdminVerificador);
   })->add(new UsuarioVerificador);
 
 

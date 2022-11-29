@@ -142,4 +142,30 @@ class UsuarioController extends Usuario implements IApiUsable
         return $response
           ->withHeader('Content-Type', 'application/json');
     }
+    public function exportarUsuariosCSV($request, $response, $args)
+  {
+    $lista = Usuario::obtenerTodos();
+
+    $payload = json_encode($lista);
+
+
+    header('Content-Type: application/csv; charset=UTF-8');
+    header('Content-Disposition: attachment; filename=datos.csv');
+
+
+    ob_end_clean();
+
+    
+      $data = json_decode($payload, true);
+      $archivo = fopen("datos.csv", 'w');
+      foreach ($data as $row) {
+        fputcsv($archivo, $row);
+      }
+      fclose($archivo);
+    
+    readfile('./datos.csv');
+
+    return $response->withHeader('Content-Type','application/csv');
+  }
+
 }
